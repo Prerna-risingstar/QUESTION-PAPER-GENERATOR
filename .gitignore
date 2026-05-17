@@ -8,6 +8,7 @@ outputs/
 *.db
 history.db
 firebase_service_account.json
+*-firebase-adminsdk-*.json
 cookies.txt
 .env
 venv/

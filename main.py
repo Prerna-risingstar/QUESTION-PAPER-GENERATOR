@@ -400,7 +400,7 @@ def upload():
 
         try:
             raw = read_syllabus(syllabus_path)
-            model_id = request.form.get("model", "mistralai/mistral-7b-instruct")
+            model_id = "google/gemini-2.5-flash"
             difficulty = request.form.get("difficulty", "Medium")
             exam_format = request.form.get("exam_format", "End-Semester")
             
