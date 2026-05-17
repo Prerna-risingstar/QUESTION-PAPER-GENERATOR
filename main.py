@@ -13,14 +13,19 @@ from engine import read_syllabus, generate_with_retries, save_to_docx, analyze_p
 app = Flask(__name__)
 app.secret_key = "temporary-secret-key"  # OK for local dev
 
-UPLOAD_FOLDER = "uploads"
-OUTPUT_FOLDER = "outputs"
+is_vercel = os.environ.get("VERCEL") == "1" or "AWS_LAMBDA_FUNCTION_NAME" in os.environ
+
+if is_vercel:
+    UPLOAD_FOLDER = "/tmp/uploads"
+    OUTPUT_FOLDER = "/tmp/outputs"
+    DB_NAME = "/tmp/history.db"
+else:
+    UPLOAD_FOLDER = "uploads"
+    OUTPUT_FOLDER = "outputs"
+    DB_NAME = "history.db"
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
-
-# ------------------ DATABASE SETUP ------------------
-DB_NAME = "history.db"
 
 def init_db():
     conn = sqlite3.connect(DB_NAME)
